@@ -18,8 +18,9 @@ const writeStream = fs.createWriteStream(TXT_TARGET);
 pipeline(
   readStream,
   csvConverter,
-  writeStream,
+  writeStream, //
   (err) => {
     if (err) console.error(`😱 ${err.message}`);
+    else console.log("🥳 txt file generated");
   }
 );
