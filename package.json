@@ -8,15 +8,18 @@
   "private": false,
   "type": "module",
   "scripts": {
-    "reversinatorizator": "nodemon ./scripts/reversinatorizator.js",
-    "csvConverter": "nodemon ./scripts/csvToTxtJson.js"
+    "reversinatorizator": "nodemon ./src/scripts/reversinatorizator.js",
+    "csvConverter": "nodemon ./src/scripts/csvToTxtJson.js",
+    "build": "babel src -d lib"
   },
   "devDependencies": {
+    "@babel/cli": "^7.19.3",
+    "@babel/core": "^7.20.5",
     "nodemon": "^2.0.20"
   },
   "dependencies": {
-    "csvtojson": "^2.0.10",
     "colors": "^1.4.0",
+    "csvtojson": "^2.0.10",
     "funkylog": "^0.0.1"
   }
 }
