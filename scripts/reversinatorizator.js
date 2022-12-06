@@ -1,5 +1,5 @@
-import { reverseString } from "./utils/reverseString.js";
-import { rainbowLog, funkyRainbowLog } from "./utils/rainbowLog.js";
+import { reverseString } from "../utils/reverseString.js";
+import { rainbowLog, funkyRainbowLog } from "../utils/rainbowLog.js";
 
 await funkyRainbowLog("Say Hi to Reversinatorizator! ");
 
