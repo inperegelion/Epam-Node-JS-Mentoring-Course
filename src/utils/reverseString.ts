@@ -1,6 +1,6 @@
-export function reverseString(string = '') {
+export function reverseString(string = ''): string {
     const characters = string.split('');
-    const reversedCharacters = [];
+    const reversedCharacters: string[] = [];
 
     for (
         let index = 0, reversedIndex = characters.length - 1;
