@@ -1,6 +1,6 @@
 import { randomUUID } from 'crypto';
 import { isValidNewUser } from '../helpers/isValidNewUser';
-import { User, UserCore } from '../interfaces';
+import { User, UserCore, UsersSearchQuery } from '../interfaces';
 import { findInstance } from '../utils/findInstance';
 import { mockedUsers } from './mocks';
 
@@ -10,8 +10,26 @@ export function getUser(userId: User['id']): User {
     return users.find((user) => user.id === userId && !user.isDeleted);
 }
 
-export function getUsers(): User[] {
-    return users.filter((user) => !user.isDeleted);
+export function getUsers(params: UsersSearchQuery): User[] {
+    const limit = Number(params.limit);
+    const loginSubstring = params.loginSubstring;
+
+    let searchResult: User[] = [...users];
+
+    if (limit) searchResult = searchResult.slice(0, limit);
+
+    if (loginSubstring)
+        searchResult = users.filter((user) => {
+            
+            return user.login.includes(loginSubstring);
+        });
+
+    searchResult = searchResult.sort((a, b) => {
+        return a.login > b.login ? 1 : -1;
+    });
+
+    searchResult = searchResult.filter((user) => !user.isDeleted);
+    return searchResult;
 }
 
 export function createUser(data: UserCore): User {

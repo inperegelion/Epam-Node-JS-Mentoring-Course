@@ -12,3 +12,8 @@ export interface UserCore {
 export interface Error {
     message: string;
 }
+
+export interface UsersSearchQuery {
+    limit: number;
+    loginSubstring: string;
+}

@@ -1,7 +1,7 @@
 import { RequestHandler } from 'express';
 
 import db from '../db/users';
-import { User, UserCore } from '../interfaces';
+import { User, UserCore, UsersSearchQuery } from '../interfaces';
 
 const getUser: RequestHandler<{ userId: string }, User> = async (req, res) => {
     console.log(`🧔 getting user with id: '${req.params.userId}'`);
@@ -9,9 +9,12 @@ const getUser: RequestHandler<{ userId: string }, User> = async (req, res) => {
     res.json(user);
 };
 
-const getUsers: RequestHandler<null, User[]> = async (_, res) => {
+const getUsers: RequestHandler<null, User[], null, UsersSearchQuery> = async (
+    req,
+    res
+) => {
     console.log(`👨‍👩‍👧‍👦 getting all users`);
-    const users = await db.getUsers();
+    const users = await db.getUsers(req.query);
     res.json(users);
 };
 
