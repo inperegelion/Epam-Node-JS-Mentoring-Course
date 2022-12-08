@@ -21,13 +21,8 @@ const getUsers: RequestHandler<null, User[], null, UsersSearchQuery> = async (
 const createUser: RequestHandler<null, User, UserCore> = async (req, res) => {
     console.log(`👶 creating a new user`);
     const userData = req.body;
-    try {
-        const createdUser = await db.createUser(userData);
-        res.json(createdUser);
-    } catch (error) {
-        // @ts-ignore
-        res.status(400).json({ message: error.message });
-    }
+    const createdUser = await db.createUser(userData);
+    res.json(createdUser);
 };
 
 const updateUser: RequestHandler<{ userId: string }, User, UserCore> = async (

@@ -1,5 +1,4 @@
 import { randomUUID } from 'crypto';
-import { isValidNewUser } from '../helpers/isValidNewUser';
 import { User, UserCore, UsersSearchQuery } from '../interfaces';
 import { findInstance } from '../utils/findInstance';
 import { mockedUsers } from './mocks';
@@ -20,7 +19,6 @@ export function getUsers(params: UsersSearchQuery): User[] {
 
     if (loginSubstring)
         searchResult = users.filter((user) => {
-            
             return user.login.includes(loginSubstring);
         });
 
@@ -33,16 +31,13 @@ export function getUsers(params: UsersSearchQuery): User[] {
 }
 
 export function createUser(data: UserCore): User {
-    if (isValidNewUser(data)) {
-        const newUser = {
-            ...data,
-            id: randomUUID(),
-            isDeleted: false,
-        };
-        users.push(newUser);
-        return newUser;
-    }
-    throw new Error('♿ New User is Invalid!');
+    const newUser = {
+        ...data,
+        id: randomUUID(),
+        isDeleted: false,
+    };
+    users.push(newUser);
+    return newUser;
 }
 
 export function updateUser(
