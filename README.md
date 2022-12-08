@@ -27,3 +27,13 @@ cat output/books.txt
 # read code more and estimate 5
 # do not approve hometask unless you've made a thorough code review.
 ```
+
+## Hometask 2
+
+After you've pulled the branch `HT2`, find the next file: `insomnia/Insomnia React Mentoring Program.json`. You need to open it with the Insomnia app. Official page is here: https://insomnia.rest/download.
+
+Then run the server with command below and examine requirements.
+```sh
+yarn
+yarn serve
+```
