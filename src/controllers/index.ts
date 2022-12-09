@@ -1,7 +1,7 @@
 import { RequestHandler } from 'express';
 
 import db from '../data-access/users';
-import { User, UserCore, UsersSearchQuery } from '../interfaces';
+import { User, UserCore, UsersSearchQuery } from '../types';
 
 type GetUserHandler = RequestHandler<{ userId: string }, User>;
 const getUser: GetUserHandler = async (req, res) => {

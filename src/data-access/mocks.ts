@@ -1,6 +1,6 @@
-import { User } from '../interfaces';
+import { User } from '../types';
 
-export const mockedUsers: User[] = [
+export const MOCKED_USERS: User[] = [
     {
         id: '1',
         login: 'papin-robotyaga',

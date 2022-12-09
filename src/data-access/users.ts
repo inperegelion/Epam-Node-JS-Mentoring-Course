@@ -1,9 +1,9 @@
 import { randomUUID } from 'crypto';
-import { User, UserCore, UsersSearchQuery } from '../interfaces';
+import { User, UserCore, UsersSearchQuery } from '../types';
 import { findInstance } from '../utils/findInstance';
-import { mockedUsers } from './mocks';
+import { MOCKED_USERS } from './mocks';
 
-const users = mockedUsers;
+const users = MOCKED_USERS;
 
 export function getUser(userId: User['id']): User {
     return users.find((user) => user.id === userId && !user.isDeleted);
