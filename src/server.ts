@@ -17,3 +17,4 @@ app.put('/users/:userId', validator.updateUser, controllers.updateUser);
 app.delete('/users/:userId', controllers.deleteUser);
 
 app.listen(PORT);
+console.log(`Listening on a port: ${PORT}`);

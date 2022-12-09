@@ -1,45 +1,36 @@
 import { RequestHandler } from 'express';
 
-import db from '../db/users';
+import db from '../data-access/users';
 import { User, UserCore, UsersSearchQuery } from '../interfaces';
 
-const getUser: RequestHandler<{ userId: string }, User> = async (req, res) => {
-    console.log(`🧔 getting user with id: '${req.params.userId}'`);
+type GetUserHandler = RequestHandler<{ userId: string }, User>;
+const getUser: GetUserHandler = async (req, res) => {
     const user = await db.getUser(req.params.userId);
     res.json(user);
 };
 
-const getUsers: RequestHandler<null, User[], null, UsersSearchQuery> = async (
-    req,
-    res
-) => {
-    console.log(`👨‍👩‍👧‍👦 getting all users`);
+type GetUsersHandler = RequestHandler<null, User[], null, UsersSearchQuery>;
+const getUsers: GetUsersHandler = async (req, res) => {
     const users = await db.getUsers(req.query);
     res.json(users);
 };
 
-const createUser: RequestHandler<null, User, UserCore> = async (req, res) => {
-    console.log(`👶 creating a new user`);
+type CreateUserHandler = RequestHandler<null, User, UserCore>;
+const createUser: CreateUserHandler = async (req, res) => {
     const userData = req.body;
     const createdUser = await db.createUser(userData);
     res.json(createdUser);
 };
 
-const updateUser: RequestHandler<{ userId: string }, User, UserCore> = async (
-    req,
-    res
-) => {
-    console.log(`🪒 updating a user with id: '${req.params.userId}'`);
+type UpdatedUserHandler = RequestHandler<{ userId: string }, User, UserCore>;
+const updateUser: UpdatedUserHandler = async (req, res) => {
     const userData = req.body;
     const updatedUser = await db.updateUser(req.params.userId, userData);
     res.json(updatedUser);
 };
 
-const deleteUser: RequestHandler<{ userId: string }, User, UserCore> = async (
-    req,
-    res
-) => {
-    console.log(`🗿 deleting a user with id: '${req.params.userId}'`);
+type DeleteUserHandler = RequestHandler<{ userId: string }, User, UserCore>;
+const deleteUser: DeleteUserHandler = async (req, res) => {
     const deletedUser = await db.deleteUser(req.params.userId);
     res.json(deletedUser);
 };
