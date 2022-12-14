@@ -5,7 +5,7 @@ import { MOCKED_USERS } from './mocks';
 
 const users = MOCKED_USERS;
 
-export function getUser(userId: User['id']): User {
+export function getUser(userId: User['id']): User | undefined {
     return users.find((user) => user.id === userId && !user.isDeleted);
 }
 
@@ -43,16 +43,18 @@ export function createUser(data: UserCore): User {
 export function updateUser(
     userId: User['id'], //
     data: Partial<UserCore> | UserCore
-): User {
+): User | undefined {
     const [userIndex, user] = findInstance<User, string>(users, 'id', userId);
-    const updatedUser = { ...user, ...data };
+    if (!user && userIndex === -1) return undefined;
+    const updatedUser = { ...user, ...data } as User;
     users[userIndex] = updatedUser;
     return updatedUser;
 }
 
-export function deleteUser(userId: User['id']): User {
+export function deleteUser(userId: User['id']): User | undefined {
     const [userIndex, user] = findInstance<User, string>(users, 'id', userId);
-    const deletedUser: User = { ...user, isDeleted: true };
+    if (!user && userIndex === -1) return undefined;
+    const deletedUser = { ...user, isDeleted: true } as User;
     users[userIndex] = deletedUser;
     return deletedUser;
 }

@@ -6,6 +6,7 @@ import { User, UserCore, UsersSearchQuery } from '../types';
 type GetUserHandler = RequestHandler<{ userId: string }, User>;
 const getUser: GetUserHandler = async (req, res) => {
     const user = await db.getUser(req.params.userId);
+    if (!user) res.sendStatus(404);
     res.json(user);
 };
 
@@ -26,14 +27,22 @@ type UpdatedUserHandler = RequestHandler<{ userId: string }, User, UserCore>;
 const updateUser: UpdatedUserHandler = async (req, res) => {
     const userData = req.body;
     const updatedUser = await db.updateUser(req.params.userId, userData);
+    if (!updatedUser) res.sendStatus(404);
     res.json(updatedUser);
 };
 
 type DeleteUserHandler = RequestHandler<{ userId: string }, User, UserCore>;
 const deleteUser: DeleteUserHandler = async (req, res) => {
     const deletedUser = await db.deleteUser(req.params.userId);
+    if (!deletedUser) res.sendStatus(404);
     res.json(deletedUser);
 };
 
-const controllers = { getUser, getUsers, createUser, updateUser, deleteUser };
-export default controllers;
+const usersControllers = {
+    getUser,
+    getUsers,
+    createUser,
+    updateUser,
+    deleteUser,
+};
+export default usersControllers;

@@ -10,7 +10,7 @@ export function findInstance<T, P>(
     fieldName: string,
     wantedFieldValue: P
 ): [index: number, instance?: T] {
-    let index: number;
+    let index = -1;
     const instance = array.find((instance, i) => {
         if (instance[fieldName] === wantedFieldValue) {
             index = i;
