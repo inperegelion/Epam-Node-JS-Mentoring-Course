@@ -19,3 +19,12 @@ node_modules/
 # Lock files
 yarn.lock
 package-lock.json
+
+# lorems
+*lorem*
+
+# output
+output/
+
+# build
+lib/
