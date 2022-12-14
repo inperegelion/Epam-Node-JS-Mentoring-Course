@@ -6,26 +6,26 @@
   "author": "inperegelion@gmail.com",
   "license": "MIT",
   "private": false,
-  "type": "module",
+  "//type": "module",
   "scripts": {
-    "reversinatorizator": "nodemon ./src/scripts/reversinatorizator.js",
-    "csvConverter": "nodemon ./src/scripts/csvToTxtJson.js",
+    "reversinatorizator": "nodemon -x ts-node ./src/scripts/reversinatorizator.ts",
+    "csvConverter": "nodemon -x ts-node ./src/scripts/csvToTxtJson.ts",
     "build": "babel src -d lib",
     "lint": "yarn eslint ./src --fix"
   },
   "devDependencies": {
-    "@babel/cli": "^7.19.3",
-    "@babel/core": "^7.20.5",
-    "@babel/eslint-parser": "^7.19.1",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.2.1",
     "nodemon": "^2.0.20",
     "prettier": "^2.8.0"
   },
   "dependencies": {
+    "@types/node": "^18.11.11",
     "colors": "^1.4.0",
     "csvtojson": "^2.0.10",
     "eslint": "^8.29.0",
-    "funkylog": "^0.0.1"
+    "funkylog": "^0.0.1",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.9.3"
   }
 }
