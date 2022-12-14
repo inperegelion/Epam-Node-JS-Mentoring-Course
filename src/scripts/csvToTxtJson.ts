@@ -1,13 +1,13 @@
 import csv from 'csvtojson';
 import fs from 'fs';
+import path from 'path';
 import { pipeline } from 'stream';
 
 import { reCreateFolder } from '../utils/reCreateFolder';
 
-const CSV_SOURCE = `${process.cwd()}/assets/books.csv`;
-const TXT_TARGET_FOLDER = `${process.cwd()}/output/`;
-const TXT_TARGET_FILENAME = 'books.txt';
-const TXT_TARGET = TXT_TARGET_FOLDER + TXT_TARGET_FILENAME;
+const CSV_SOURCE = path.resolve('./assets/books.csv');
+const TXT_TARGET_FOLDER = path.resolve('./output');
+const TXT_TARGET = path.join(TXT_TARGET_FOLDER, 'books.txt');
 
 reCreateFolder(TXT_TARGET_FOLDER);
 
