@@ -25,3 +25,7 @@ export interface IUsersSearchQuery {
     limit: number;
     loginSubstring: string;
 }
+export interface UpdateUserResponse {
+    rows: IUserModel[];
+    count: number;
+}

@@ -5,6 +5,7 @@ import {
     IUserCreationAttributes,
     IUserModel,
     IUsersSearchQuery,
+    UpdateUserResponse,
 } from '../types';
 
 type GetUserHandler = RequestHandler<{ userId: string }, IUserModel>;
@@ -14,17 +15,17 @@ const getUser: GetUserHandler = async (req, res) => {
     res.json(user);
 };
 
-// type GetUsersHandler = RequestHandler<
-//     {},
-//     IUserAttributes[],
-//     null,
-//     IUsersSearchQuery
-// >;
-// const getUsers: GetUsersHandler = async (req, res) => {
-//     const params = req.query;
-//     const users = await UsersDB.getAll(params);
-//     res.json(users);
-// };
+type GetUsersHandler = RequestHandler<
+    {},
+    UpdateUserResponse,
+    null,
+    IUsersSearchQuery
+>;
+const getUsers: GetUsersHandler = async (req, res) => {
+    const params = req.query;
+    const users = await UsersDB.getAll(params);
+    res.json(users);
+};
 
 type CreateUserHandler = RequestHandler<
     {},
@@ -62,7 +63,7 @@ const deleteUser: DeleteUserHandler = async (req, res) => {
 
 const usersControllers = {
     getUser,
-    // getUsers,
+    getUsers,
     createUser,
     updateUser,
     deleteUser,

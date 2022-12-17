@@ -1,14 +1,34 @@
+import { Op } from 'sequelize';
 import { User } from '../models/user';
 import {
     IUserAttributes,
     IUserCreationAttributes,
     IUsersSearchQuery,
+    UpdateUserResponse,
 } from '../types';
 
 export class UsersDB {
     public async get(id: IUserAttributes['id']) {
-        const user = User.findOne({ where: { id } });
+        const user = User.findByPk(id);
         return user;
+    }
+
+    public async getAll(
+        params: IUsersSearchQuery
+    ): Promise<UpdateUserResponse> {
+        const limit = Number(params.limit);
+        const loginSubstring = params.loginSubstring;
+
+        const searchRequest: Record<string, any> = {};
+        if (loginSubstring)
+            searchRequest.where = {
+                login: { [Op.like]: `%${loginSubstring}%` },
+            };
+        if (limit) searchRequest.limit = limit;
+
+        const users = await User.findAndCountAll(searchRequest);
+
+        return users;
     }
 
     public async create(userAttributes: IUserCreationAttributes) {
@@ -32,25 +52,6 @@ export class UsersDB {
         });
         return number;
     }
-
-    // public getAll(params: IUsersSearchQuery): IUserAttributes[] {
-    //     const limit = Number(params.limit);
-    //     const loginSubstring = params.loginSubstring;
-
-    //     let searchResult: IUserAttributes[] = [...users];
-
-    //     if (limit) searchResult = searchResult.slice(0, limit);
-
-    //     if (loginSubstring)
-    //         searchResult = users.filter((user) => {
-    //             return user.login.includes(loginSubstring);
-    //         });
-
-    //     searchResult = searchResult.sort(sortByField('login'));
-
-    //     searchResult = searchResult.filter((user) => !user.is_deleted);
-    //     return searchResult;
-    // }
 }
 
 export default new UsersDB();
