@@ -1,77 +1,56 @@
-import { randomUUID } from 'crypto';
-import { User, UserCore, UsersSearchQuery } from '../types';
-import { findInstance } from '../utils/findInstance';
-import { sortByField } from '../utils/sortByField';
-import { MOCKED_USERS } from './mocks';
-
-const users = MOCKED_USERS;
+import { User } from '../models/user';
+import {
+    IUserAttributes,
+    IUserCreationAttributes,
+    IUsersSearchQuery,
+} from '../types';
 
 export class UsersDB {
-    users: User[];
-
-    constructor() {
-        this.users = users;
+    public async get(id: IUserAttributes['id']) {
+        const user = User.findOne({ where: { id } });
+        return user;
     }
 
-    public get(userId: User['id']): User | undefined {
-        return this.users.find((user) => user.id === userId && !user.isDeleted);
+    public async create(userAttributes: IUserCreationAttributes) {
+        const freshUser = await User.create(userAttributes);
+        return freshUser;
     }
 
-    public getAll(params: UsersSearchQuery): User[] {
-        const limit = Number(params.limit);
-        const loginSubstring = params.loginSubstring;
-
-        let searchResult: User[] = [...users];
-
-        if (limit) searchResult = searchResult.slice(0, limit);
-
-        if (loginSubstring)
-            searchResult = users.filter((user) => {
-                return user.login.includes(loginSubstring);
-            });
-
-        searchResult = searchResult.sort(sortByField('login'));
-
-        searchResult = searchResult.filter((user) => !user.isDeleted);
-        return searchResult;
+    public async update(
+        id: IUserAttributes['id'],
+        userAttributes: Partial<IUserCreationAttributes>
+    ) {
+        const affectedRows = await User.update(userAttributes, {
+            where: { id },
+        });
+        return affectedRows;
     }
 
-    public create(data: UserCore): User {
-        const newUser = {
-            ...data,
-            id: randomUUID(),
-            isDeleted: false,
-        };
-        this.users.push(newUser);
-        return newUser;
+    public async delete(id: IUserAttributes['id']) {
+        const number = await User.destroy({
+            where: { id },
+        });
+        return number;
     }
 
-    public update(
-        userId: User['id'],
-        data: Partial<UserCore> | UserCore
-    ): User | undefined {
-        const [userIndex, user] = findInstance<User, string>(
-            users,
-            'id',
-            userId
-        );
-        if (!user && userIndex === -1) return undefined;
-        const updatedUser = { ...user, ...data } as User;
-        users[userIndex] = updatedUser;
-        return updatedUser;
-    }
+    // public getAll(params: IUsersSearchQuery): IUserAttributes[] {
+    //     const limit = Number(params.limit);
+    //     const loginSubstring = params.loginSubstring;
 
-    public delete(userId: User['id']): User | undefined {
-        const [userIndex, user] = findInstance<User, string>(
-            users,
-            'id',
-            userId
-        );
-        if (!user && userIndex === -1) return undefined;
-        const deletedUser = { ...user, isDeleted: true } as User;
-        users[userIndex] = deletedUser;
-        return deletedUser;
-    }
+    //     let searchResult: IUserAttributes[] = [...users];
+
+    //     if (limit) searchResult = searchResult.slice(0, limit);
+
+    //     if (loginSubstring)
+    //         searchResult = users.filter((user) => {
+    //             return user.login.includes(loginSubstring);
+    //         });
+
+    //     searchResult = searchResult.sort(sortByField('login'));
+
+    //     searchResult = searchResult.filter((user) => !user.is_deleted);
+    //     return searchResult;
+    // }
 }
 
 export default new UsersDB();

@@ -14,4 +14,4 @@ app.use(express.json());
 app.use('/users', usersRouter);
 
 app.listen(PORT);
-console.log(`Listening on a port: ${PORT}`);
+console.log(`👂 Listening on a port: ${PORT}`);
