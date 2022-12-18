@@ -12,7 +12,7 @@ type GetUserHandler = RequestHandler<{ userId: string }, IUserModel>;
 const getUser: GetUserHandler = async (req, res) => {
     const user = await UsersDB.get(req.params.userId);
     if (!user) res.sendStatus(404);
-    res.json(user);
+    else res.json(user);
 };
 
 type GetUsersHandler = RequestHandler<
@@ -32,6 +32,7 @@ type CreateUserHandler = RequestHandler<
     IUserModel, //IUserAttributes,
     IUserCreationAttributes
 >;
+
 const createUser: CreateUserHandler = async (req, res) => {
     const userData = req.body;
     const createdUser = await UsersDB.create(userData);
@@ -56,7 +57,7 @@ type DeleteUserHandler = RequestHandler<
     IUserCreationAttributes
 >;
 const deleteUser: DeleteUserHandler = async (req, res) => {
-    const deletedRows = await UsersDB.delete(req.params.userId);
+    const deletedRows = await UsersDB.softDelete(req.params.userId);
     if (!deletedRows) res.sendStatus(404);
     res.status(200).send(`Deleted ${deletedRows} row(s).`);
 };

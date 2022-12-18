@@ -44,7 +44,13 @@ yarn serve
 
 ### How have I ran Postgre locally
 
-If you are using Windows + WSL, go to [this article on Microsoft official docs](https://learn.microsoft.com/en-us/windows/wsl/tutorials/wsl-database#install-postgresql) telling how to use Postgre in WSL. When you will get into the `psql` CLI, use this SQL command to create DataBase:
+If you are using Windows + WSL, go to [this article on Microsoft official docs](https://learn.microsoft.com/en-us/windows/wsl/tutorials/wsl-database#install-postgresql) telling how to use Postgre in WSL. In future to start Postgre we would need only:
+
+```sh
+sudo service postgresql start
+```
+
+When you will get into the `psql` CLI, use this SQL command to create DataBase:
 
 ```sh
 CREATE DATABASE mydb

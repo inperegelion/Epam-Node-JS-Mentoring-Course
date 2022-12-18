@@ -22,8 +22,10 @@ export interface IError {
 }
 
 export interface IUsersSearchQuery {
-    limit: number;
-    loginSubstring: string;
+    limit?: number;
+    loginSubstring?: string;
+    sort?: boolean;
+    hideDeleted?: boolean;
 }
 export interface UpdateUserResponse {
     rows: IUserModel[];
