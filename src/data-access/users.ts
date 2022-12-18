@@ -18,7 +18,7 @@ export class UsersDB {
     public async getAll(
         params: IUsersSearchQuery
     ): Promise<UpdateUserResponse> {
-        const defaultParams = { sort: true, hideDeleted: true, limit: 4 };
+        const defaultParams = { sort: true, hideDeleted: true, limit: 10 };
 
         const searchRequest = this.composeSearchRequest({
             ...defaultParams,
