@@ -1,19 +1,33 @@
-export interface User extends UserCore {
-    id: string;
-    isDeleted: boolean;
-}
+import Sequelize from 'sequelize';
 
-export interface UserCore {
+export interface IUserModel
+    extends Sequelize.Model<IUserAttributes, IUserCreationAttributes> {}
+
+export interface IUserAttributes {
+    id: string;
+    is_deleted: boolean;
     login: string;
     password: string;
     age: number;
 }
 
-export interface Error {
+export interface IUserCreationAttributes {
+    login: string;
+    password: string;
+    age: number;
+}
+
+export interface IError {
     message: string;
 }
 
-export interface UsersSearchQuery {
-    limit: number;
-    loginSubstring: string;
+export interface IUsersSearchQuery {
+    limit?: number;
+    loginSubstring?: string;
+    sort?: boolean;
+    hideDeleted?: boolean;
+}
+export interface UpdateUserResponse {
+    rows: IUserModel[];
+    count: number;
 }
